@@ -1,0 +1,62 @@
+<div class="card">
+    <p-table [columns]="cols" [value]="products" [tableStyle]="{ 'min-width': '50rem' }">
+      <ng-template pTemplate="caption">
+        <div class="flex align-items-center justify-content-between">
+          <span>Settings</span>
+          <p-button icon="pi pi-cog" (onClick)="sidebarVisible = true"></p-button>
+        </div>
+    </ng-template>
+      <ng-template pTemplate="header" let-columns>
+        <tr>
+          <th>Orario</th>
+          <th>Lunedì</th>
+          <th>Martedì</th>
+          <th>Mercoledì</th>
+          <th>Giovedì</th>
+          <th>Venerdì</th>
+          <th>Sabato</th>
+          <th>Domenica</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-orario>
+        <tr>
+          <td>{{orario.orario.start}} - {{orario.orario.end}}</td>
+          <td><p-checkbox [binary]="true"></p-checkbox> {{orario.lunedi}}</td>
+          <td><p-checkbox [binary]="true"></p-checkbox> {{orario.martedi}}</td>
+          <td><p-checkbox [binary]="true"></p-checkbox> {{orario.mercoledi}}</td>
+          <td><p-checkbox [binary]="true"></p-checkbox> {{orario.giovedi}}</td>
+          <td><p-checkbox [binary]="true"></p-checkbox> {{orario.venerdi}}</td>
+          <td><p-checkbox [binary]="true"></p-checkbox> {{orario.sabato}}</td>
+          <td><p-checkbox [binary]="true"></p-checkbox> {{orario.domenica}}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+  
+  
+  <p-dialog [closable]="!!times.length" [modal]="true" [style]="{ width: '50vw' }" [draggable]="false" [resizable]="false"
+    header="Imposta le tue ore!" [(visible)]="setupHours" [style]="{width: '50vw'}">
+    <form [formGroup]="formGroup" class=" card flex flex-wrap p-fluid">
+      <div class="flex-auto">
+        <label for="startHour">Ora inizio</label>
+        <input type="text" pInputText id="startHour" formControlName="startHour">
+      </div>
+      <div class="flex-auto">
+        <label for="endHour">Ora fine</label>
+        <input type="text" id="endHour" pInputText formControlName="endHour">
+      </div>
+      <div class="flex-auto">
+        <label for="integeronly">Intervallo (in minuti)</label>
+        <p-inputNumber inputId="integeronly" formControlName="interval"> </p-inputNumber>
+      </div>
+  
+      <div class="flex-auto">
+        <p-button label="Salva" [disabled]="formGroup.invalid" (onClick)="saveHours()"></p-button>
+      </div>
+    </form>
+  </p-dialog>
+  
+  <p-sidebar [(visible)]="sidebarVisible" position="right">
+    <h3>Impostazioni</h3>
+    <p-button label="Imposta le tue ore" (onClick)="setupHours = true"></p-button>
+  </p-sidebar>
